@@ -1,0 +1,27 @@
+﻿#apiDiv {
+    padding: 2%;
+    display: inline-block;
+    width: 95%;
+    text-align: justify;
+    background: white;
+}
+
+
+#apiDiv h4 {
+    margin: 10px 0;
+}
+
+
+#apiDiv .return, #apiDiv .getMovie {
+    text-align: center;
+}
+
+    #apiDiv .return a, #apiDiv .getMovie a {
+        color: #00e8ff;
+        font-size: 20px;
+        text-decoration: underline;
+    }
+
+#bottomLinks {
+    margin-top: 3%;
+}

@@ -1,0 +1,35 @@
+﻿#apiDiv {
+	padding: 2%;
+    display: inline-block;
+    width: 95%;
+    text-align: justify;
+    background:white;
+}
+
+#movieTitle {
+    text-align: center;
+    margin-bottom: 3%;
+}
+
+#movieWrapper {
+    width: 300px;
+}
+
+#apiDiv h4 {
+    margin: 10px 0;
+}
+
+
+#apiDiv .return, #apiDiv .rateMovie {
+    text-align: center;
+}
+
+    #apiDiv .return a, #apiDiv .rateMovie a {
+        color: #00e8ff;
+        font-size: 20px;
+        text-decoration: underline;
+    }
+
+#bottomLinks {
+    margin-top: 3%;
+}

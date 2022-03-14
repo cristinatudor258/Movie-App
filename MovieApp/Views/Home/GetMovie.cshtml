@@ -1,0 +1,51 @@
+﻿@model MovieApp.Models.MovieModel
+@using MovieApp.Models;
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Content/movie.css" />
+
+@{
+    //get genres list as string in order to show it on details page
+    var genresString = ""; ;
+    foreach (var gen in Model.genres)
+    {
+        genresString += gen.name + ", ";
+    }
+    genresString = genresString.Substring(0, genresString.Length - 2);
+
+    //format release date in order to remove hour
+    var releaseDate = Model.release_date.ToString("dddd, dd MMMM yyyy");
+}
+
+<body class="bg-info">
+
+    <div id="apiDiv">
+
+        <div id="movieTitle" class="h2">@Model.title</div>
+        <div class="col-xs-12">
+            <div class="col-xs-4">
+                <div id="movieWrapper">
+                    <img class="movieImg img-thumbnail img-responsive" src="https://image.tmdb.org/t/p/w500/@Model.poster_path" />
+                </div>
+            </div>
+            <div class="col-xs-8">
+                <p>@Model.overview</p>
+                <p>Genre: @genresString</p>
+                <p>Popularity: @Model.popularity</p>
+                <p>Release date: @releaseDate</p>
+                <p>Vote average: @Model.vote_average</p>
+            </div>
+        </div>
+
+        <div id="bottomLinks">
+            @if (Request.IsAuthenticated)
+            {
+                <div class="rateMovie"><a href="@Url.Action("RateMovie", "Home", new { id = Model.id })">Rate the movie</a></div>
+            }
+            <div class="return"><a href="@Url.Action("Index", "Home")">Back to movies list</a></div>
+        </div>
+    </div>
+
+</body>

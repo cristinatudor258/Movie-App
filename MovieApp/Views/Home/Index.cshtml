@@ -1,0 +1,50 @@
+﻿@model MovieApp.Models.MovieModel
+@using MovieApp.Models;
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/mainPage.js"></script>
+<link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Content/mainPage.css" />
+
+<body class="bg-info">
+    <div id="apiDiv">
+        @using (Html.BeginForm())
+        {
+            @Html.EditorFor(model => model.searchedText)
+            <button id="submit">Search</button>
+            @Html.ValidationMessageFor(model => model.searchedText)
+        }
+        <div id="message">
+            @(new HtmlString(ViewBag.Result))
+        </div>
+        <div class="pagingDiv">
+            @{
+                PagingInfo pagingInfo = (PagingInfo)ViewBag.Paging;
+                if (pagingInfo != null)
+                {
+                    @Html.PageLinks((PagingInfo)ViewBag.Paging, x => Url.Action("Index", "Home", new { page = x }))
+                }
+            }
+        </div>
+    </div>
+</body>
+
+<!-- Modal popup for showing movie info-->
+<!--<div id="movieInfoModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">-->
+<!-- Modal content-->
+<!--<div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>-->

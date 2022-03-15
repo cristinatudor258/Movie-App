@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MovieApp.Models.RatingsDb
 {
-    public class User
+    public class DbUser
     {
         public int ID { get; set; }
         public string Email { get; set; }

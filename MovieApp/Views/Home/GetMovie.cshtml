@@ -3,6 +3,7 @@
 
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/rateMovie.js"></script>
 <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="~/Content/movie.css" />
 
@@ -42,7 +43,15 @@
         <div id="bottomLinks">
             @if (Request.IsAuthenticated)
             {
-                <div class="rateMovie"><a href="@Url.Action("RateMovie", "Home", new { id = Model.id })">Rate the movie</a></div>
+                <div class="rateMovie bg-info col-xs-12">
+                    <div id="movieTitle" class="col-xs-3">Tell us your opinion :)</div>
+                    <div class="col-xs-4">
+                        <textarea class="form-control" id="opinionArea" rows="3"></textarea>
+                    </div>
+                    <div class="col-xs-3">
+                        `<button onclick="sendReview(@Model.id, '${@Model.title}')"> Send a review </button>`
+                    </div>
+                </div>
             }
             <div class="return"><a href="@Url.Action("Index", "Home")">Back to movies list</a></div>
         </div>

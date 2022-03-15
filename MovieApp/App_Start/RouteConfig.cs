@@ -28,9 +28,9 @@ namespace MovieApp
 
             routes.MapRoute(
                name: "RateMovieApi",
-               url: "Home/{id}/",
-               defaults: new { controller = "Home", action = "RateMovie", id = "" },
-               constraints: new { id = @"^[0-9]+$" }
+               url: "{controller}/GetMovie/{id}/{action}/{title}/{rating}",
+               defaults: new { controller = "Home", action = "RateMovie", id="", title="", rating=""},
+               constraints: new { id = @"^[0-9]+$" , title = @"^[a-zA-Z]+$",  rating = @"^[a-zA-Z]+$" }
            );
 
             routes.MapRoute(

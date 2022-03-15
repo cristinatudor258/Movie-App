@@ -8,14 +8,13 @@ using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using MovieApp.DAL;
+using MovieApp.Models.RatingsDb;
 
 namespace MovieApp.Controllers
 {
     public class HomeController : Controller
     {
         private string apiKey = "a63b1ef2eebf8d6a196080444128dc84";
-        private RatingContext db = new RatingContext();
         public ActionResult Index(string searchedMovie, int? page)
         {
             CallAPI(searchedMovie, page);
@@ -114,30 +113,31 @@ namespace MovieApp.Controllers
             return View(movie);
         }
 
-        //public ActionResult GetRequestToken(int id)
-        //{
-        //    HttpWebRequest apiRequest = WebRequest.Create("https://api.themoviedb.org/3/authentication/token/new?api_key=" + apiKey + "&language=en-US") as HttpWebRequest;
-
-        //    string apiResponse = "";
-        //    //Get request token
-        //    using (HttpWebResponse response = apiRequest.GetResponse() as HttpWebResponse)
-        //    {
-        //        StreamReader reader = new StreamReader(response.GetResponseStream());
-        //        apiResponse = reader.ReadToEnd();
-        //    }
-        //    RequestToken rootObject = JsonConvert.DeserializeObject<RequestToken>(apiResponse);
-        //    var requestToken = rootObject.request_token;
-        //    string url = "https://www.themoviedb.org/authenticate/" + requestToken + "?redirect_to=https://localhost:44386/Home/RateMovie/" + id;
-
-        //    //CreateValidSession(requestToken);
-
-        //    return Redirect(url);
-        //}
-
-        public ActionResult RateMovie(int id)
+        [HttpPost]
+        public ActionResult RateMovie(string title, string rating)
         {
             TempData["test"] = "testTempData";
-            return View();
+            //insert rating in database
+            try
+            {
+                using (var db = new AppMoviesDbContext())
+                {
+                    Rating ratingRow = new Rating();
+                    ratingRow.User = HttpContext.User.Identity.Name;
+                    //ratingRow.MovieID = id2;
+                    ratingRow.MovieTitle = title;
+                    ratingRow.UserRating = rating;
+
+                    db.Ratings.Add(ratingRow);
+                    db.SaveChanges();
+
+                    return Content("<script language='javascript' type='text/javascript'>alert('Thanks for Feedback!');</script>");
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content("<script language='javascript' type='text/javascript'>alert('Please try again!');</script>");
+            }
         }
     }
 }

@@ -28,7 +28,7 @@ namespace MovieApp.Tests.Controllers
         {
             HomeController controller = new HomeController();
             MovieModel model = new MovieModel();
-            ViewResult result = controller.RateMovie(3) as ViewResult;
+            ViewResult result = controller.RateMovie(3, "testTitle", "test") as ViewResult;
             Assert.AreEqual("testTempData", result.TempData["test"]);
         }
     }

@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using MovieApp.Models.RatingsDb;
 
 namespace MovieApp.Models
 {
@@ -18,16 +19,18 @@ namespace MovieApp.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class AppMoviesDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+        public DbSet<DbUser> DbUsers { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
+        public AppMoviesDbContext()
+            : base("SystemUsers", throwIfV1Schema: false)
         {
         }
 
-        public static ApplicationDbContext Create()
+        public static AppMoviesDbContext Create()
         {
-            return new ApplicationDbContext();
+            return new AppMoviesDbContext();
         }
     }
 }

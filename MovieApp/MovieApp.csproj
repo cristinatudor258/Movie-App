@@ -170,14 +170,13 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="DAL\RatingContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="MainPageHelper.cs" />
-    <Compile Include="Migrations\202203140037178_InitialCreate.cs" />
-    <Compile Include="Migrations\202203140037178_InitialCreate.Designer.cs">
-      <DependentUpon>202203140037178_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202203141604331_FirstMigration.cs" />
+    <Compile Include="Migrations\202203141604331_FirstMigration.Designer.cs">
+      <DependentUpon>202203141604331_FirstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -189,7 +188,7 @@
     <Compile Include="Models\ProductionCompany.cs" />
     <Compile Include="Models\ProductionCountry.cs" />
     <Compile Include="Models\RatingsDb\Rating.cs" />
-    <Compile Include="Models\RatingsDb\User.cs" />
+    <Compile Include="Models\RatingsDb\DbUser.cs" />
     <Compile Include="Models\RequestToken.cs" />
     <Compile Include="Models\ResponseMovie.cs" />
     <Compile Include="Models\ResponseSearchMovie.cs" />
@@ -220,6 +219,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\rateMovie.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -255,7 +255,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\GetMovie.cshtml" />
-    <Content Include="Views\Home\RateMovie.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -274,8 +273,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202203140037178_InitialCreate.resx">
-      <DependentUpon>202203140037178_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202203141604331_FirstMigration.resx">
+      <DependentUpon>202203141604331_FirstMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -15,12 +15,17 @@ namespace MovieApp.Controllers
     public class HomeController : Controller
     {
         private string apiKey = "a63b1ef2eebf8d6a196080444128dc84";
-        public ActionResult Index(string searchedMovie, int? page)
+        private readonly AppMoviesDbContext dbContext = new AppMoviesDbContext();
+
+        //method called on page changing
+        public ActionResult Index(int? page)
         {
-            CallAPI(searchedMovie, page);
+            CallAPI("", page);
             Models.MovieModel movie = new Models.MovieModel();
             return View(movie);
         }
+
+        //search a movie by its name
         [HttpPost]
         public ActionResult Index(MovieModel movie, string searchedText)
         {
@@ -35,7 +40,6 @@ namespace MovieApp.Controllers
         {
             int pageNo = page == null || Convert.ToInt32(page) == 0 ? 1 : Convert.ToInt32(page);
 
-            /*Calling API https://developers.themoviedb.org/3/search/search-movie */
             HttpWebRequest apiRequest = (searchedText != "" && searchedText != null) ? WebRequest.Create("https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&language=en-US&query=" + searchedText + "&page=" + pageNo) as HttpWebRequest : WebRequest.Create("https://api.themoviedb.org/3/movie/top_rated?api_key=" + apiKey + "&language=en-US&page=" + pageNo) as HttpWebRequest;
 
             string apiResponse = "";
@@ -56,9 +60,10 @@ namespace MovieApp.Controllers
             foreach (Result result in rootObject.results)
             {
                 string image = result.poster_path == null ? Url.Content("~/Content/Image/no-image.png") : "https://image.tmdb.org/t/p/w500/" + result.poster_path;
+                string starImg = Url.Content("~/Content/Icons/star.png");
                 string link = Url.Action("GetMovie", "Home", new { id = result.id });
 
-                sb.Append("<div class=\"result\" resourceId=\"" + result.id + "\">" + "<a href=\"" + link + "\"><img src=\"" + image + "\" />" + "<p>" + result.title + "</a></p></div>");
+                sb.Append("<div class=\"result\" resourceId=\"" + result.id + "\">" + "<a href=\"" + link + "\"><img class=\"img img-thumbnail\" src=\"" + image + "\" />" + "<p>" + result.title + "</a></p><p class=\"voteAvg\"'><img class=\"voteImg\" src=\""+starImg+"\"/>"+result.vote_average+"</p></div>");
 
             }
 
@@ -72,6 +77,7 @@ namespace MovieApp.Controllers
             ViewBag.Paging = pagingInfo;
         }
 
+        //redirect to movie details page
         public ActionResult GetMovie(int id)
         {
             HttpWebRequest apiRequest = WebRequest.Create("https://api.themoviedb.org/3/movie/" + id + "?api_key=" + apiKey + "&language=en-US") as HttpWebRequest;
@@ -87,7 +93,6 @@ namespace MovieApp.Controllers
             MovieModel movie = new MovieModel();
             movie.adult = rootObject.adult;
             movie.backdrop_path = rootObject.backdrop_path;
-            //movie.belongs_to_collection = rootObject.belongs_to_collection;
             movie.budget = rootObject.budget;
             movie.genres = rootObject.genres;
             movie.homepage = rootObject.homepage;
@@ -113,30 +118,31 @@ namespace MovieApp.Controllers
             return View(movie);
         }
 
+        //add a comment about movie - just for logged users!
         [HttpPost]
-        public ActionResult RateMovie(string title, string rating)
+        public ActionResult RateMovie(int id, string title, string rating)
         {
             TempData["test"] = "testTempData";
             //insert rating in database
             try
             {
-                using (var db = new AppMoviesDbContext())
+                using (dbContext)
                 {
                     Rating ratingRow = new Rating();
                     ratingRow.User = HttpContext.User.Identity.Name;
-                    //ratingRow.MovieID = id2;
+                    ratingRow.MovieID = id;
                     ratingRow.MovieTitle = title;
                     ratingRow.UserRating = rating;
 
-                    db.Ratings.Add(ratingRow);
-                    db.SaveChanges();
+                    dbContext.Ratings.Add(ratingRow);
+                    dbContext.SaveChanges();
 
-                    return Content("<script language='javascript' type='text/javascript'>alert('Thanks for Feedback!');</script>");
+                    return Content("Thanks for Feedback!");
                 }
             }
             catch (Exception ex)
             {
-                return Content("<script language='javascript' type='text/javascript'>alert('Please try again!');</script>");
+                return Content("Please try again!");
             }
         }
     }

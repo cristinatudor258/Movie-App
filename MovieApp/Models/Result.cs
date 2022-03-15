@@ -12,6 +12,7 @@ namespace MovieApp.Models
         public int id { get; set; }
         public string title { get; set; }
         public DateTime? release_date { get; set; }
+        public decimal vote_average { get; set; }
     }
 
 }

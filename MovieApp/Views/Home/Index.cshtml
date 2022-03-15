@@ -12,7 +12,7 @@
         @using (Html.BeginForm())
         {
             @Html.EditorFor(model => model.searchedText)
-            <button id="submit">Search</button>
+            <button id="submit" class="btn btn-success text-white"><i class="fa fa-home"></i>Search</button>
             @Html.ValidationMessageFor(model => model.searchedText)
         }
         <div id="message">

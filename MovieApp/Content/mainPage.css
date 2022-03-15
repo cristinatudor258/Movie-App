@@ -41,7 +41,6 @@
 
             #apiDiv #message .resultDiv .result {
                 width: 23%;
-                height: 240px;
                 padding: 6px;
                 float: left;
                 text-align: center;
@@ -105,3 +104,14 @@
             color: #f0f0f0;
             text-shadow: 0px 0px 3px rgba(0,0,0, .5);
         }
+
+.voteAvg {
+    font-size: 12px;
+    color: #198754;
+}
+
+.voteImg {
+    width: 26px !important;
+    height: 20px;
+    opacity: 0.8;
+}

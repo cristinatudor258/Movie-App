@@ -21,23 +21,23 @@ namespace MovieApp
 
             routes.MapRoute(
                 name: "MovieApi",
-                url: "Home/{id}/",
+                url: "Home/{action}/{id}/",
                 defaults: new { controller = "Home", action = "GetMovie", id = "" },
                 constraints: new { id = @"^[0-9]+$" }
             );
 
             routes.MapRoute(
                name: "RateMovieApi",
-               url: "{controller}/GetMovie/{id}/{action}/{title}/{rating}",
-               defaults: new { controller = "Home", action = "RateMovie", id="", title="", rating=""},
+               url: "{controller}/{action}/{id}/{title}/{rating}",
+               defaults: new { controller = "Home", action = "RateMovie", id= UrlParameter.Optional, title="", rating=""},
                constraints: new { id = @"^[0-9]+$" , title = @"^[a-zA-Z]+$",  rating = @"^[a-zA-Z]+$" }
            );
 
             routes.MapRoute(
                 name: "HomeApiPaging",
-                url: "Home/{searchedMovie}/{page}",
-                defaults: new { controller = "Home", action = "Index", searchedMovie = "", page = "" },
-                constraints: new { searchedMovie = @"^[a-zA-Z]+$", page = @"^[0-9]+$" }
+                url: "Home/{page}",
+                defaults: new { controller = "Home", action = "Index", page = "" },
+                constraints: new { page = @"^[0-9]+$" }
             );
         }
     }

@@ -21,6 +21,18 @@
     var releaseDate = Model.release_date.ToString("dddd, dd MMMM yyyy");
 }
 
+@{
+    //get first trailer video
+    var trailerSrc = "";
+    foreach (var item in Model.videos.results)
+    {
+        if (item.type == "Trailer")
+        {
+            trailerSrc = "https://www.youtube.com/embed/" + item.key;
+        }
+    }
+}
+
 <body class="bg-info">
 
     <div id="apiDiv">
@@ -28,12 +40,11 @@
         <div id="movieTitle" class="h2">@Model.title</div>
         <div class="container">
             <div class="row">
-                <div class="col-4">
-                    <div id="movieWrapper">
-                        <img class="movieImg img-thumbnail img-responsive" src="https://image.tmdb.org/t/p/w500/@Model.poster_path" />
-                    </div>
+                <div class="col-6 d-flex justify-content-center">
+                    <iframe width="420" height="345" src="@trailerSrc">
+                    </iframe>
                 </div>
-                <div class="col-8">
+                <div class="col-6">
                     <p>@Model.overview</p>
                     <p>Genre: @genresString</p>
                     <p>Popularity: @Model.popularity</p>

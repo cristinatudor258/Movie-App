@@ -57,7 +57,7 @@ namespace MovieApp.Controllers
 
             StringBuilder sb = new StringBuilder();
             sb.Append("<div class=\"resultDiv\"><p>Top rated movies</p>");
-            foreach (Result result in rootObject.results)
+            foreach (MovieModel result in rootObject.results)
             {
                 string image = result.poster_path == null ? Url.Content("~/Content/Image/no-image.png") : "https://image.tmdb.org/t/p/w500/" + result.poster_path;
                 string starImg = Url.Content("~/Content/Icons/star.png");
@@ -80,7 +80,7 @@ namespace MovieApp.Controllers
         //redirect to movie details page
         public ActionResult GetMovie(int id)
         {
-            HttpWebRequest apiRequest = WebRequest.Create("https://api.themoviedb.org/3/movie/" + id + "?api_key=" + apiKey + "&language=en-US") as HttpWebRequest;
+            HttpWebRequest apiRequest = WebRequest.Create("https://api.themoviedb.org/3/movie/" + id + "?api_key=" + apiKey + "&language=en-US&append_to_response=videos") as HttpWebRequest;
 
             string apiResponse = "";
             using (HttpWebResponse response = apiRequest.GetResponse() as HttpWebResponse)
@@ -89,32 +89,7 @@ namespace MovieApp.Controllers
                 apiResponse = reader.ReadToEnd();
             }
 
-            ResponseMovie rootObject = JsonConvert.DeserializeObject<ResponseMovie>(apiResponse);
-            MovieModel movie = new MovieModel();
-            movie.adult = rootObject.adult;
-            movie.backdrop_path = rootObject.backdrop_path;
-            movie.budget = rootObject.budget;
-            movie.genres = rootObject.genres;
-            movie.homepage = rootObject.homepage;
-            movie.id = rootObject.id;
-            movie.imdb_id = rootObject.imdb_id;
-            movie.original_language = rootObject.original_language;
-            movie.original_title = rootObject.original_title;
-            movie.poster_path = rootObject.poster_path;
-            movie.title = rootObject.title;
-            movie.release_date = rootObject.release_date;
-            movie.overview = rootObject.overview;
-            movie.popularity = rootObject.popularity;
-            movie.production_companies = rootObject.production_companies;
-            movie.production_countries = rootObject.production_countries;
-            movie.revenue = rootObject.revenue;
-            movie.runtime = rootObject.runtime;
-            movie.spokenLanguages = rootObject.spokenLanguages;
-            movie.status = rootObject.status;
-            movie.tagline = rootObject.tagline;
-            movie.video = rootObject.video;
-            movie.vote_average = rootObject.vote_average;
-            movie.vote_count = rootObject.vote_count;
+            MovieModel movie = JsonConvert.DeserializeObject<MovieModel>(apiResponse);
             return View(movie);
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MovieApp.Models.Video;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -34,5 +35,6 @@ namespace MovieApp.Models
         public bool video { get; set; }
         public decimal vote_average { get; set; }
         public int vote_count { get; set; }
+        public VideoModel videos { get; set; }
     }
 }
